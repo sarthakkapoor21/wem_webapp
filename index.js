@@ -1,5 +1,5 @@
 const userAction = async () => {
-    const response = await fetch('http://localhost:8000/endpoints/', {
+    const response = await fetch('https://pure-river-85340.herokuapp.com/endpoints/', {
         method: 'POST',
         // body: {}, // string or object
         headers: {
@@ -11,7 +11,7 @@ const userAction = async () => {
 };
 
 const loadList = async () => {
-    const response = await fetch('http://localhost:8000/endpoints/', {
+    const response = await fetch('https://pure-river-85340.herokuapp.com/endpoints/', {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json'
@@ -30,7 +30,7 @@ const addListToHTML = (list) => {
         var li = document.createElement("li");
         li.setAttribute('id', list[i].unique_url);
         var anchor = document.createElement("a");
-        var redirect_url = 'http://127.0.0.1:5500/detail.html?endpoint=' + String(list[i].unique_url);
+        var redirect_url = 'https://webhookmanager.netlify.app/detail.html?endpoint=' + String(list[i].unique_url);
         anchor.setAttribute('href', redirect_url);
         anchor.appendChild(document.createTextNode(list[i].unique_url));
         li.appendChild(anchor);

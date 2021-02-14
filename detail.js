@@ -11,7 +11,7 @@ const loadList = async () => {
     var endpointURL = String(getParameterByName('endpoint'));
     var endpointURLHeading = document.getElementById("endpointURL");
     endpointURLHeading.appendChild(document.createTextNode(endpointURL));
-    const response = await fetch('http://localhost:8000/endpoints/' + endpointURL, {
+    const response = await fetch('https://pure-river-85340.herokuapp.com/endpoints/' + endpointURL, {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json'
