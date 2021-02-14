@@ -13,18 +13,23 @@ const getParameterByName = (name) => {
     return decodeURIComponent(results[2].replace(/\+/g, ' '));
 };
 
-const loadList = async () => {
+const loadList = () => {
     var endpointURL = String(getParameterByName('endpoint'));
     var endpointURLHeading = document.getElementById("endpointURL");
     endpointURLHeading.appendChild(document.createTextNode(endpointURL));
-    const response = await fetch(API_BASE_URL + 'endpoints/' + endpointURL, {
+
+    fetch(API_BASE_URL + 'endpoints/' + endpointURL, {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json'
         }
+    }).then(
+        (resp) => resp.json()
+    ).then(function(data) {
+        addListToHTML(data.request_data);
+    }).catch(function() {
+        window.location = BASE_URL + 'error.html';
     });
-    const myJson = await response.json();
-    addListToHTML(myJson.request_data);
 };
 
 const getHeadersOrQueryParamsList = (list) => {

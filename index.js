@@ -4,33 +4,48 @@ var BASE_URL = 'https://webhookmanager.netlify.app/'
 // var API_BASE_URL = 'http://localhost:8000/'
 // var BASE_URL = 'http://localhost:5500/'
 
-const userAction = async () => {
+document.getElementById("createNew").addEventListener("click", function(event){
+    event.preventDefault()
+});
+
+async function postData() {
     const response = await fetch(API_BASE_URL + 'endpoints/', {
         method: 'POST',
-        // body: {}, // string or object
         headers: {
             'Content-Type': 'application/json'
-        }
+        },
     });
-    const myJson = await response.json(); //extract JSON from the http response
-    loadList();
+    return response.json();
+}
+
+const createNewEndpoint = () => {
+    document.getElementById("createNew").disabled = true;
+    postData().then(function() {
+        loadList();
+    }).catch(function() {
+        window.location = BASE_URL + 'error.html';
+    });
 };
 
-const loadList = async () => {
-    const response = await fetch(API_BASE_URL + 'endpoints/', {
+const loadList = () => {
+    fetch(API_BASE_URL + 'endpoints/', {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json'
         }
+    }).then(
+        (resp) => resp.json()
+    ).then(function(data) {
+        addListToHTML(data);
+    }).catch(function() {
+        window.location = BASE_URL + 'error.html';
     });
-    const myJson = await response.json();
-    console.log(myJson);
-    addListToHTML(myJson);
 };
 
 const addListToHTML = (list) => {
 
     var ul = document.getElementById("endpointList");
+    ul.innerHTML = "";
     var i;
     for (i = 0; i < list.length; i++) {
         var li = document.createElement("li");
@@ -42,8 +57,7 @@ const addListToHTML = (list) => {
         li.appendChild(anchor);
         ul.appendChild(li);
     }
+    document.getElementById("createNew").disabled = false;
 }
 
 loadList();
-
-// export default userAction;
