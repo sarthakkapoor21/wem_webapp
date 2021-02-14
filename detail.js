@@ -1,3 +1,9 @@
+var API_BASE_URL = 'https://pure-river-85340.herokuapp.com/'
+var BASE_URL = 'https://webhookmanager.netlify.app/'
+
+// var API_BASE_URL = 'http://localhost:8000/'
+// var BASE_URL = 'http://localhost:5500/'
+
 const getParameterByName = (name) => {
     name = name.replace(/[\[\]]/g, '\\$&');
     var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
@@ -11,7 +17,7 @@ const loadList = async () => {
     var endpointURL = String(getParameterByName('endpoint'));
     var endpointURLHeading = document.getElementById("endpointURL");
     endpointURLHeading.appendChild(document.createTextNode(endpointURL));
-    const response = await fetch('https://pure-river-85340.herokuapp.com/endpoints/' + endpointURL, {
+    const response = await fetch(API_BASE_URL + 'endpoints/' + endpointURL, {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json'

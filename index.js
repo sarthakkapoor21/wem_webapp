@@ -1,5 +1,11 @@
+var API_BASE_URL = 'https://pure-river-85340.herokuapp.com/'
+var BASE_URL = 'https://webhookmanager.netlify.app/'
+
+// var API_BASE_URL = 'http://localhost:8000/'
+// var BASE_URL = 'http://localhost:5500/'
+
 const userAction = async () => {
-    const response = await fetch('https://pure-river-85340.herokuapp.com/endpoints/', {
+    const response = await fetch(API_BASE_URL + 'endpoints/', {
         method: 'POST',
         // body: {}, // string or object
         headers: {
@@ -11,7 +17,7 @@ const userAction = async () => {
 };
 
 const loadList = async () => {
-    const response = await fetch('https://pure-river-85340.herokuapp.com/endpoints/', {
+    const response = await fetch(API_BASE_URL + 'endpoints/', {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json'
@@ -30,7 +36,7 @@ const addListToHTML = (list) => {
         var li = document.createElement("li");
         li.setAttribute('id', list[i].unique_url);
         var anchor = document.createElement("a");
-        var redirect_url = 'https://webhookmanager.netlify.app/detail.html?endpoint=' + String(list[i].unique_url);
+        var redirect_url = BASE_URL + 'detail.html?endpoint=' + String(list[i].unique_url);
         anchor.setAttribute('href', redirect_url);
         anchor.appendChild(document.createTextNode(list[i].unique_url));
         li.appendChild(anchor);
@@ -39,3 +45,5 @@ const addListToHTML = (list) => {
 }
 
 loadList();
+
+// export default userAction;
