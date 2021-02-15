@@ -8,6 +8,10 @@ document.getElementById("createNew").addEventListener("click", function(event){
     event.preventDefault()
 });
 
+const getEndpointListText = (listElement) => (
+    listElement.unique_url + ' (' + listElement.request_count + ') ' + listElement.time_to_live
+);
+
 async function postData() {
     const response = await fetch(API_BASE_URL + 'endpoints/', {
         method: 'POST',
@@ -51,9 +55,9 @@ const addListToHTML = (list) => {
         var li = document.createElement("li");
         li.setAttribute('id', list[i].unique_url);
         var anchor = document.createElement("a");
-        var redirect_url = BASE_URL + 'detail.html?endpoint=' + String(list[i].unique_url);
+        var redirect_url = BASE_URL + 'detail.html?endpoint=' + list[i].unique_url;
         anchor.setAttribute('href', redirect_url);
-        anchor.appendChild(document.createTextNode(list[i].unique_url));
+        anchor.appendChild(document.createTextNode(getEndpointListText(list[i])));
         li.appendChild(anchor);
         ul.appendChild(li);
     }
