@@ -69,6 +69,9 @@ const addListToHTML = (list) => {
         li.append(rawBody);
         ul.appendChild(li);
     }
+    if (list.length === 0) {
+        ul.appendChild(document.createTextNode('NO HITS IN LAST 5 MINUTES'));
+    }
 };
 
 loadList();

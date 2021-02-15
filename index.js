@@ -9,8 +9,23 @@ document.getElementById("createNew").addEventListener("click", function(event){
 });
 
 const getEndpointListText = (listElement) => (
-    listElement.unique_url + ' (' + listElement.request_count + ') ' + listElement.time_to_live
+    listElement.unique_url + ' (' + listElement.time_to_live + ') '
 );
+
+const getCountSpanElement = (listElement) => {
+    var spanChild = document.createElement('span');
+    spanChild.setAttribute('class', 'badge badge-primary badge-pill');
+    spanChild.appendChild(document.createTextNode(listElement.request_count));
+    return spanChild;
+};
+
+const getAnchorEndpointElement = (listElement) => {
+    var anchor = document.createElement("a");
+    var redirect_url = BASE_URL + 'detail.html?endpoint=' + listElement.unique_url;
+    anchor.setAttribute('href', redirect_url);
+    anchor.appendChild(document.createTextNode(getEndpointListText(listElement)));
+    return anchor;
+};
 
 async function postData() {
     const response = await fetch(API_BASE_URL + 'endpoints/', {
@@ -54,11 +69,9 @@ const addListToHTML = (list) => {
     for (i = 0; i < list.length; i++) {
         var li = document.createElement("li");
         li.setAttribute('id', list[i].unique_url);
-        var anchor = document.createElement("a");
-        var redirect_url = BASE_URL + 'detail.html?endpoint=' + list[i].unique_url;
-        anchor.setAttribute('href', redirect_url);
-        anchor.appendChild(document.createTextNode(getEndpointListText(list[i])));
-        li.appendChild(anchor);
+        li.setAttribute('class', 'list-group-item d-flex justify-content-between align-items-center');
+        li.appendChild(getAnchorEndpointElement(list[i]));
+        li.appendChild(getCountSpanElement(list[i]));
         ul.appendChild(li);
     }
     document.getElementById("createNew").disabled = false;
